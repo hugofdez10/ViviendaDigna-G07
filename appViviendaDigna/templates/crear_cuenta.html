@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block titulo %}Crear cuenta - Vivienda Digna{% endblock %}
+
+{% block contenido %}
+    <h2>Crear cuenta</h2>
+    <p>Regístrate para consultar alojamientos y guardar tus preferencias.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button class="boton" type="submit">
+            Crear cuenta
+        </button>
+    </form>
+
+    <p>
+        ¿Ya tienes cuenta?
+        <a href="{% url 'iniciar_sesion' %}">Iniciar sesión</a>
+    </p>
+{% endblock %}

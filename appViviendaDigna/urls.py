@@ -9,4 +9,7 @@ urlpatterns = [
     path('ciudades/<int:ciudad_id>/', views.detalle_ciudad, name='detalle_ciudad'),
     path('servicios/', views.listado_servicios, name='listado_servicios'),
     path('servicios/<int:servicio_id>/', views.detalle_servicio, name='detalle_servicio'),
+    path('iniciar-sesion/', views.iniciar_sesion, name='iniciar_sesion'),
+    path('crear-cuenta/', views.crear_cuenta, name='crear_cuenta'),
+    path('cerrar-sesion/', views.cerrar_sesion, name='cerrar_sesion'),
 ]

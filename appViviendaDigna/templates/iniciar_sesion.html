@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block titulo %}Iniciar sesión - Vivienda Digna{% endblock %}
+
+{% block contenido %}
+    <h2>Iniciar sesión</h2>
+    <p>Introduce tus datos para acceder a los alojamientos.</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button class="boton" type="submit">
+            Entrar
+        </button>
+    </form>
+{% endblock %}
