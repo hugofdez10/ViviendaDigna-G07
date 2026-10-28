@@ -1,0 +1,52 @@
+[
+  {
+    "model": "appViviendaDigna.ciudad",
+    "pk": 1,
+    "fields": {
+      "nombre": "Ciudad de ejemplo A",
+      "descripcion": "Datos ficticios para revisión."
+    }
+  },
+  {
+    "model": "appViviendaDigna.ciudad",
+    "pk": 2,
+    "fields": {
+      "nombre": "Ciudad de ejemplo B",
+      "descripcion": "Datos ficticios para revisión."
+    }
+  },
+  {
+    "model": "appViviendaDigna.servicio",
+    "pk": 1,
+    "fields": {
+      "nombre": "Wifi",
+      "descripcion": "Internet de ejemplo."
+    }
+  },
+  {
+    "model": "appViviendaDigna.oferta",
+    "pk": 1,
+    "fields": {
+      "titulo": "Habitación ejemplo A",
+      "descripcion": "Anuncio ficticio.",
+      "precio_mensual": "400.00",
+      "ciudad": 1,
+      "servicios": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "appViviendaDigna.oferta",
+    "pk": 2,
+    "fields": {
+      "titulo": "Habitación ejemplo B",
+      "descripcion": "Anuncio ficticio.",
+      "precio_mensual": "600.00",
+      "ciudad": 2,
+      "servicios": [
+        1
+      ]
+    }
+  }
+]
