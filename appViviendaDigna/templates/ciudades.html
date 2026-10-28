@@ -1,0 +1,17 @@
+{% extends "listado.html" %}
+
+{% block titulo %}Ciudades - Vivienda Digna{% endblock %}
+
+{% block titulo_listado %}Ciudades{% endblock %}
+
+{% block elementos_listado %}
+    {% for ciudad in ciudades %}
+        <li>
+            <a href="{% url 'detalle_ciudad' ciudad.id %}">
+                {{ ciudad.nombre }}
+            </a>
+        </li>
+    {% empty %}
+        <li>No hay ciudades disponibles.</li>
+    {% endfor %}
+{% endblock %}

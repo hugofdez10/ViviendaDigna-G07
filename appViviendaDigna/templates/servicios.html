@@ -1,0 +1,17 @@
+{% extends "listado.html" %}
+
+{% block titulo %}Servicios - Vivienda Digna{% endblock %}
+
+{% block titulo_listado %}Servicios{% endblock %}
+
+{% block elementos_listado %}
+    {% for servicio in servicios %}
+        <li>
+            <a href="{% url 'detalle_servicio' servicio.id %}">
+                {{ servicio.nombre }}
+            </a>
+        </li>
+    {% empty %}
+        <li>No hay servicios disponibles.</li>
+    {% endfor %}
+{% endblock %}

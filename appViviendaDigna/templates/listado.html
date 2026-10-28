@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+    <h2>{% block titulo_listado %}{% endblock %}</h2>
+
+    <ul>
+        {% block elementos_listado %}
+        {% endblock %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block titulo %}{{ oferta.titulo }} - Vivienda Digna{% endblock %}
+
+{% block contenido %}
+    <h2>{{ oferta.titulo }}</h2>
+
+    <p>{{ oferta.descripcion }}</p>
+    <p class="precio">{{ oferta.precio_mensual }} €/mes</p>
+
+    <h3>Ciudad</h3>
+    <p>
+        <a href="{% url 'detalle_ciudad' oferta.ciudad.id %}">
+            {{ oferta.ciudad.nombre }}
+        </a>
+    </p>
+    <p>{{ oferta.ciudad.descripcion }}</p>
+
+    <h3>Servicios incluidos</h3>
+    <ul>
+        {% for servicio in oferta.servicios.all %}
+            <li>
+                <a href="{% url 'detalle_servicio' servicio.id %}">
+                    {{ servicio.nombre }}
+                </a>
+                : {{ servicio.descripcion }}
+            </li>
+        {% empty %}
+            <li>Esta oferta no tiene servicios asociados.</li>
+        {% endfor %}
+    </ul>
+
+    <p>
+        <a href="{% url 'listado_ofertas' %}">Volver al listado de ofertas</a>
+    </p>
+{% endblock %}

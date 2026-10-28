@@ -1,0 +1,22 @@
+{% extends "listado.html" %}
+
+{% block titulo %}Ofertas - Vivienda Digna{% endblock %}
+
+{% block titulo_listado %}Listado de ofertas{% endblock %}
+
+{% block elementos_listado %}
+    {% for oferta in ofertas %}
+        <li>
+            <h3>
+                <a href="{% url 'detalle_oferta' oferta.id %}">
+                    {{ oferta.titulo }}
+                </a>
+            </h3>
+            <p>{{ oferta.descripcion }}</p>
+            <p>Ciudad: {{ oferta.ciudad.nombre }}</p>
+            <p class="precio">{{ oferta.precio_mensual }} €/mes</p>
+        </li>
+    {% empty %}
+        <li>No hay ofertas disponibles.</li>
+    {% endfor %}
+{% endblock %}
