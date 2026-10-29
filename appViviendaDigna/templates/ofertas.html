@@ -7,6 +7,9 @@
 {% block elementos_listado %}
     {% for oferta in ofertas %}
         <li>
+            {% if oferta.imagen %}
+                <img class="imagen-oferta" src="{{ oferta.imagen.url }}" alt="{{ oferta.titulo }}">
+            {% endif %}
             <h3>
                 <a href="{% url 'detalle_oferta' oferta.id %}">
                     {{ oferta.titulo }}

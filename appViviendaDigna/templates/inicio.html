@@ -22,6 +22,10 @@
             <li>
                 <h3>{{ oferta.ciudad.nombre }}</h3>
 
+                {% if oferta.imagen %}
+                    <img class="imagen-oferta" src="{{ oferta.imagen.url }}" alt="{{ oferta.titulo }}">
+                {% endif %}
+
                 <p class="titulo-oferta">
                     <a href="{% url 'detalle_oferta' oferta.id %}">
                         {{ oferta.titulo }}

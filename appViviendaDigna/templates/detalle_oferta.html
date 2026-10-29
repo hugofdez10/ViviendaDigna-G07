@@ -5,6 +5,10 @@
 {% block contenido %}
     <h2>{{ oferta.titulo }}</h2>
 
+    {% if oferta.imagen %}
+        <img class="imagen-detalle" src="{{ oferta.imagen.url }}" alt="{{ oferta.titulo }}">
+    {% endif %}
+
     <p>{{ oferta.descripcion }}</p>
     <p class="precio">{{ oferta.precio_mensual }} €/mes</p>
 

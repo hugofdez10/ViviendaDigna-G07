@@ -24,6 +24,7 @@ class Oferta(models.Model):
     precio_mensual = models.DecimalField(max_digits=8, decimal_places=2)
     ciudad = models.ForeignKey(Ciudad, on_delete=models.CASCADE)
     servicios = models.ManyToManyField(Servicio)
+    imagen = models.ImageField(upload_to='ofertas/', blank=True, null=True)
 
     def __str__(self):
         return self.titulo
