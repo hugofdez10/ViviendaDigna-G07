@@ -19,6 +19,7 @@
             <a href="{% url 'listado_ofertas' %}">Ofertas</a>
             <a href="{% url 'listado_ciudades' %}">Ciudades</a>
             <a href="{% url 'listado_servicios' %}">Servicios</a>
+            <a href="{% url 'perfil' %}">Mi perfil</a>
 
             <form method="post" action="{% url 'cerrar_sesion' %}">
                 {% csrf_token %}

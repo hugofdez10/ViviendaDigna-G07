@@ -1,3 +1,53 @@
-{% extends "base.html" %}{% block contenido %}
-<h2>Encuentra tu próximo alojamiento</h2><p>Proyecto de alojamiento para estudiantes.</p>
+{% extends "base.html" %}
+
+{% block titulo %}Inicio - Vivienda Digna{% endblock %}
+
+{% block contenido %}
+    <section class="presentacion">
+        <h2>Encuentra tu próximo alojamiento</h2>
+        <p>
+            Consulta alojamientos para estudiantes en diferentes ciudades
+            y descubre los servicios que incluye cada oferta.
+        </p>
+    </section>
+
+    <h2>Una oferta por ciudad de interés</h2>
+    <p>
+        Seleccionamos el alojamiento con el precio mensual más bajo
+        de cada ciudad.
+    </p>
+
+    <ul class="ofertas-inicio">
+        {% for oferta in ofertas_destacadas %}
+            <li>
+                <h3>{{ oferta.ciudad.nombre }}</h3>
+
+                <p class="titulo-oferta">
+                    <a href="{% url 'detalle_oferta' oferta.id %}">
+                        {{ oferta.titulo }}
+                    </a>
+                </p>
+
+                <p class="descripcion-oferta">
+                    {{ oferta.descripcion }}
+                </p>
+
+                <p class="precio">
+                    {{ oferta.precio_mensual }} €/mes
+                </p>
+
+                <a class="boton" href="{% url 'detalle_oferta' oferta.id %}">
+                    Ver oferta
+                </a>
+            </li>
+        {% empty %}
+            <li>No hay ofertas disponibles.</li>
+        {% endfor %}
+    </ul>
+
+    <p>
+        <a class="boton" href="{% url 'listado_ofertas' %}">
+            Ver todas las ofertas
+        </a>
+    </p>
 {% endblock %}

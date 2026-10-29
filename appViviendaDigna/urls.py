@@ -12,4 +12,5 @@ urlpatterns = [
     path('iniciar-sesion/', views.iniciar_sesion, name='iniciar_sesion'),
     path('crear-cuenta/', views.crear_cuenta, name='crear_cuenta'),
     path('cerrar-sesion/', views.cerrar_sesion, name='cerrar_sesion'),
+    path('perfil/', views.perfil, name='perfil'),
 ]

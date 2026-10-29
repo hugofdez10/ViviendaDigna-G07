@@ -7,7 +7,8 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.db import transaction
-from .models import Oferta, Ciudad, Servicio
+from .models import Oferta, Ciudad, Servicio, Preferencias
+from .forms import DatosUsuarioForm, PreferenciasForm
 
 from .models import Oferta, Ciudad, Servicio
 
@@ -68,7 +69,28 @@ def detalle_servicio(request, servicio_id):
 
 @login_required
 def inicio(request):
-    return render(request, 'inicio.html')
+    preferencias, creado = Preferencias.objects.get_or_create(
+        usuario=request.user
+    )
+
+    ciudades = preferencias.ciudades.all()
+
+    # Sin ciudades seleccionadas, mostramos todas.
+    if not ciudades.exists():
+        ciudades = Ciudad.objects.all()
+
+    ofertas_destacadas = []
+
+    for ciudad in ciudades:
+        oferta = ciudad.oferta_set.order_by(
+            'precio_mensual', 'id'
+        ).first()
+
+        if oferta:
+            ofertas_destacadas.append(oferta)
+
+    context = {'ofertas_destacadas': ofertas_destacadas}
+    return render(request, 'inicio.html', context)
 
 
 def iniciar_sesion(request):
@@ -87,7 +109,7 @@ def iniciar_sesion(request):
 
 def crear_cuenta(request):
     if request.user.is_authenticated:
-        return redirect('inicio')
+        return redirect('perfil')
 
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -95,9 +117,10 @@ def crear_cuenta(request):
         if form.is_valid():
             with transaction.atomic():
                 usuario = form.save()
+                Preferencias.objects.create(usuario=usuario)
 
             login(request, usuario)
-            return redirect('inicio')
+            return redirect('perfil')
     else:
         form = UserCreationForm()
 
@@ -110,4 +133,39 @@ def cerrar_sesion(request):
     logout(request)
     return redirect('iniciar_sesion')
 
+@login_required
+def perfil(request):
+    preferencias, creado = Preferencias.objects.get_or_create(
+        usuario=request.user
+    )
 
+    if request.method == 'POST':
+        datos_form = DatosUsuarioForm(
+            request.POST,
+            instance=request.user
+        )
+
+        preferencias_form = PreferenciasForm(
+            request.POST,
+            instance=preferencias
+        )
+
+        datos_validos = datos_form.is_valid()
+        preferencias_validas = preferencias_form.is_valid()
+
+        if datos_validos and preferencias_validas:
+            with transaction.atomic():
+                datos_form.save()
+                preferencias_form.save()
+
+            return redirect('perfil')
+    else:
+        datos_form = DatosUsuarioForm(instance=request.user)
+        preferencias_form = PreferenciasForm(instance=preferencias)
+
+    context = {
+        'datos_form': datos_form,
+        'preferencias_form': preferencias_form,
+    }
+
+    return render(request, 'perfil.html', context)

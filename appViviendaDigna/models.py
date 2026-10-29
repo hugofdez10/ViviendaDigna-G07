@@ -28,3 +28,24 @@ class Oferta(models.Model):
     def __str__(self):
         return self.titulo
 
+class Preferencias(models.Model):
+    usuario = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+
+    ciudades = models.ManyToManyField(
+        Ciudad,
+        blank=True
+    )
+
+    precio_maximo = models.DecimalField(
+        max_digits=8,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        validators=[MinValueValidator(0)]
+    )
+
+    def __str__(self):
+        return f"Preferencias de {self.usuario.username}"
