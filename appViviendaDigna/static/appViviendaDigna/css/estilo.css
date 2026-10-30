@@ -108,6 +108,10 @@ main li h3 {
     margin-top: 0;
 }
 
+main form > div {
+    margin: 16px 0;
+}
+
 
 .precio {
     color: #174c43;

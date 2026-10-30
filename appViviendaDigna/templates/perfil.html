@@ -10,7 +10,7 @@
         {% csrf_token %}
 
         <h3>Datos personales</h3>
-        {{ datos_form.as_p }}
+        {{ datos_form.as_div }}
 
         <h3>Preferencias de alojamiento</h3>
         <p>
@@ -18,7 +18,7 @@
             Puedes dejar el presupuesto vacío si no tienes un límite.
         </p>
 
-        {{ preferencias_form.as_p }}
+        {{ preferencias_form.as_div }}
 
         <button class="boton" type="submit">
             Guardar cambios

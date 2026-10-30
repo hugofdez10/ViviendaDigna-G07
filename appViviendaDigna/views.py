@@ -1,7 +1,4 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth import login
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -9,9 +6,6 @@ from django.views.decorators.http import require_POST
 from django.db import transaction
 from .models import Oferta, Ciudad, Servicio, Preferencias
 from .forms import DatosUsuarioForm, PreferenciasForm
-
-from .models import Oferta, Ciudad, Servicio
-
 
 @login_required
 def listado_ofertas(request):
@@ -69,28 +63,21 @@ def detalle_servicio(request, servicio_id):
 
 @login_required
 def inicio(request):
-    preferencias, creado = Preferencias.objects.get_or_create(
-        usuario=request.user
-    )
-
+    preferencias, _ = Preferencias.objects.get_or_create(usuario=request.user)
     ciudades = preferencias.ciudades.all()
-
-    # Sin ciudades seleccionadas, mostramos todas.
     if not ciudades.exists():
         ciudades = Ciudad.objects.all()
 
     ofertas_destacadas = []
-
     for ciudad in ciudades:
-        oferta = ciudad.oferta_set.order_by(
-            'precio_mensual', 'id'
-        ).first()
-
+        ofertas = ciudad.oferta_set.all()
+        if preferencias.precio_maximo is not None:
+            ofertas = ofertas.filter(precio_mensual__lte=preferencias.precio_maximo)
+        oferta = ofertas.order_by('precio_mensual', 'id').first()
         if oferta:
             ofertas_destacadas.append(oferta)
 
-    context = {'ofertas_destacadas': ofertas_destacadas}
-    return render(request, 'inicio.html', context)
+    return render(request, 'inicio.html', {'ofertas_destacadas': ofertas_destacadas})
 
 
 def iniciar_sesion(request):
