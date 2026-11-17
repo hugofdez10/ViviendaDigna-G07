@@ -20,7 +20,11 @@
     <ul class="ofertas-inicio">
         {% for oferta in ofertas_destacadas %}
             <li>
-                <h3>{{ oferta.ciudad.nombre }}</h3>
+                <h3>
+                    <a href="{% url 'detalle_ciudad' oferta.ciudad.id %}">
+                        {{ oferta.ciudad.nombre }}
+                    </a>
+                </h3>
 
                 {% if oferta.imagen %}
                     <img class="imagen-oferta" src="{{ oferta.imagen.url }}" alt="{{ oferta.titulo }}">

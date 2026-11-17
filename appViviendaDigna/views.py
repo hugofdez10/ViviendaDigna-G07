@@ -80,6 +80,10 @@ def inicio(request):
     return render(request, 'inicio.html', {'ofertas_destacadas': ofertas_destacadas})
 
 
+def portada_antigua(request):
+    return redirect('inicio')
+
+
 def iniciar_sesion(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)

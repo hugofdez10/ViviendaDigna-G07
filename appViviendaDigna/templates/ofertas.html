@@ -16,7 +16,12 @@
                 </a>
             </h3>
             <p>{{ oferta.descripcion }}</p>
-            <p>Ciudad: {{ oferta.ciudad.nombre }}</p>
+            <p>
+                Ciudad:
+                <a href="{% url 'detalle_ciudad' oferta.ciudad.id %}">
+                    {{ oferta.ciudad.nombre }}
+                </a>
+            </p>
             <p class="precio">{{ oferta.precio_mensual }} €/mes</p>
         </li>
     {% empty %}

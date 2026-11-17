@@ -1,6 +1,7 @@
 from decimal import Decimal
 from django.contrib.auth import get_user_model
 from django.test import TestCase
+from django.test.html import parse_html
 from django.urls import reverse
 from .models import Ciudad, Oferta, Preferencias, Servicio
 
@@ -94,3 +95,48 @@ class FlujoViviendaTests(TestCase):
 
     def test_oferta_inexistente_devuelve_404(self):
         self.assertEqual(self.client.get(reverse('detalle_oferta', args=[99999])).status_code, 404)
+
+    def test_raiz_muestra_portada_con_sesion(self):
+        self.assertEqual(reverse('inicio'), '/')
+        respuesta = self.client.get('/')
+        self.assertEqual(respuesta.status_code, 200)
+        self.assertTemplateUsed(respuesta, 'inicio.html')
+        self.assertContains(respuesta, '<a href="/">Inicio</a>', html=True)
+
+    def test_raiz_sin_sesion_redirige_a_login(self):
+        self.client.logout()
+        self.assertRedirects(self.client.get('/'), reverse('iniciar_sesion') + '?next=/')
+
+    def test_portada_antigua_redirige_a_raiz(self):
+        self.assertRedirects(self.client.get('/appViviendaDigna/'), '/')
+        self.client.logout()
+        self.assertRedirects(self.client.get('/appViviendaDigna/'), '/', target_status_code=302)
+
+    def test_portada_enlaza_cada_ciudad_con_su_ficha(self):
+        respuesta = self.client.get('/')
+        self.html_valido(respuesta)
+        for ciudad in [self.a, self.b]:
+            with self.subTest(ciudad=ciudad.nombre):
+                url = reverse('detalle_ciudad', args=[ciudad.pk])
+                self.assertInHTML(f'<h3><a href="{url}">{ciudad.nombre}</a></h3>', respuesta.content.decode())
+                self.assertContains(self.client.get(url), ciudad.descripcion)
+
+    def test_listado_enlaza_cada_ciudad_con_su_ficha(self):
+        respuesta = self.client.get(reverse('listado_ofertas'))
+        self.html_valido(respuesta)
+        for ciudad, ofertas in [(self.a, 3), (self.b, 1)]:
+            with self.subTest(ciudad=ciudad.nombre):
+                url = reverse('detalle_ciudad', args=[ciudad.pk])
+                self.assertInHTML(f'<p>Ciudad: <a href="{url}">{ciudad.nombre}</a></p>', respuesta.content.decode(), count=ofertas)
+        self.assertContains(respuesta, reverse('detalle_oferta', args=[self.barata.pk]))
+
+    def html_valido(self, respuesta):
+        # parse_html falla si hay etiquetas de cierre sin pareja; además no debe haber enlaces anidados.
+        documento = parse_html(respuesta.content.decode())
+        pendientes = [(documento, False)]
+        while pendientes:
+            elemento, dentro_de_enlace = pendientes.pop()
+            for hijo in getattr(elemento, 'children', []):
+                es_enlace = getattr(hijo, 'name', None) == 'a'
+                self.assertFalse(dentro_de_enlace and es_enlace, 'Hay un enlace dentro de otro enlace')
+                pendientes.append((hijo, dentro_de_enlace or es_enlace))
