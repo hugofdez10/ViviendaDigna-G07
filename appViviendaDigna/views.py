@@ -3,13 +3,13 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.db import transaction
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_POST
-from django.views.generic import DetailView, FormView, ListView, RedirectView, TemplateView
+from django.views.generic import CreateView, DetailView, FormView, ListView, RedirectView, TemplateView
 
-from .forms import DatosUsuarioForm, FiltroOfertasForm, PreferenciasForm
+from .forms import DatosUsuarioForm, FiltroOfertasForm, PreferenciasForm, SolicitudInformacionForm
 from .models import Ciudad, Oferta, Preferencias, Servicio
 
 
@@ -161,3 +161,34 @@ class PerfilView(LoginRequiredMixin, TemplateView):
                 preferencias_form.save()
             return redirect('perfil')
         return self.render_to_response(contexto)
+
+
+class SolicitarInformacionView(LoginRequiredMixin, CreateView):
+    form_class = SolicitudInformacionForm
+    template_name = 'solicitar_informacion.html'
+
+    def get_oferta(self):
+        if not hasattr(self, 'oferta'):
+            self.oferta = get_object_or_404(Oferta, pk=self.kwargs['oferta_id'])
+        return self.oferta
+
+    def get_context_data(self, **kwargs):
+        contexto = super().get_context_data(**kwargs)
+        contexto['oferta'] = self.get_oferta()
+        return contexto
+
+    def form_valid(self, form):
+        form.instance.oferta = self.get_oferta()
+        form.instance.usuario = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('solicitud_confirmada', args=[self.object.pk])
+
+
+class SolicitudConfirmadaView(LoginRequiredMixin, DetailView):
+    template_name = 'solicitud_confirmada.html'
+    context_object_name = 'solicitud'
+
+    def get_queryset(self):
+        return self.request.user.solicitudes_informacion.select_related('oferta')

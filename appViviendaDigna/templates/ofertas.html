@@ -1,19 +1,19 @@
 {% extends "base.html" %}
-{% load static %}
+{% load i18n static %}
 
-{% block titulo %}Ofertas - Vivienda Digna{% endblock %}
+{% block titulo %}{% translate "Ofertas" %} - Vivienda Digna{% endblock %}
 
 {% block contenido %}
-    <h2>Listado de ofertas</h2>
+    <h2>{% translate "Listado de ofertas" %}</h2>
     <form id="filtro-ofertas" method="get" action="{% url 'listado_ofertas' %}"
           data-resultados-url="{% url 'resultados_ofertas' %}"
-          data-cargando="Cargando ofertas…"
-          data-actualizado="Listado actualizado."
-          data-error="No se pudieron cargar las ofertas. Vuelve a intentarlo.">
+          data-cargando="{% translate 'Cargando ofertas…' %}"
+          data-actualizado="{% translate 'Listado actualizado.' %}"
+          data-error="{% translate 'No se pudieron cargar las ofertas. Vuelve a intentarlo.' %}">
         <div>{{ filtros.ciudad.label_tag }} {{ filtros.ciudad }}</div>
         <div>{{ filtros.precio_maximo.label_tag }} {{ filtros.precio_maximo }}</div>
-        <button class="boton" type="submit">Filtrar</button>
-        <a href="{% url 'listado_ofertas' %}">Limpiar filtros</a>
+        <button class="boton" type="submit">{% translate "Filtrar" %}</button>
+        <a href="{% url 'listado_ofertas' %}">{% translate "Limpiar filtros" %}</a>
     </form>
     <p id="estado-ofertas" role="status"></p>
     {% include "ofertas_resultados.html" %}

@@ -50,3 +50,21 @@ class Preferencias(models.Model):
 
     def __str__(self):
         return f"Preferencias de {self.usuario.username}"
+
+
+class SolicitudInformacion(models.Model):
+    oferta = models.ForeignKey(Oferta, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='solicitudes_informacion',
+    )
+    mensaje = models.TextField(max_length=500)
+    fecha = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'solicitud de información'
+        verbose_name_plural = 'solicitudes de información'
+
+    def __str__(self):
+        return f'{self.oferta} · {self.usuario}'

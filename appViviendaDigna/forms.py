@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 
-from .models import Ciudad, Preferencias
+from .models import Ciudad, Preferencias, SolicitudInformacion
 
 
 class DatosUsuarioForm(forms.ModelForm):
@@ -34,14 +35,22 @@ class PreferenciasForm(forms.ModelForm):
 class FiltroOfertasForm(forms.Form):
     ciudad = forms.ModelChoiceField(
         queryset=Ciudad.objects.order_by('nombre'),
-        label='Ciudad',
-        empty_label='Todas las ciudades',
+        label=_('Ciudad'),
+        empty_label=_('Todas las ciudades'),
         required=False,
     )
     precio_maximo = forms.DecimalField(
-        label='Precio máximo mensual (€)',
+        label=_('Precio máximo mensual (€)'),
         min_value=0,
         max_digits=8,
         decimal_places=2,
         required=False,
     )
+
+
+class SolicitudInformacionForm(forms.ModelForm):
+    class Meta:
+        model = SolicitudInformacion
+        fields = ['mensaje']
+        labels = {'mensaje': _('¿Qué te gustaría saber sobre esta oferta?')}
+        widgets = {'mensaje': forms.Textarea(attrs={'rows': 5})}

@@ -263,3 +263,7 @@ footer p {
 #estado-ofertas:empty {
     display: none;
 }
+
+.idioma {
+    margin-block-start: 0.75rem;
+}
