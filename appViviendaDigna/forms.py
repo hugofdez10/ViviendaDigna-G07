@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 
-from .models import Preferencias
+from .models import Ciudad, Preferencias
 
 
 class DatosUsuarioForm(forms.ModelForm):
@@ -29,3 +29,19 @@ class PreferenciasForm(forms.ModelForm):
         widgets = {
             'ciudades': forms.CheckboxSelectMultiple(),
         }
+
+
+class FiltroOfertasForm(forms.Form):
+    ciudad = forms.ModelChoiceField(
+        queryset=Ciudad.objects.order_by('nombre'),
+        label='Ciudad',
+        empty_label='Todas las ciudades',
+        required=False,
+    )
+    precio_maximo = forms.DecimalField(
+        label='Precio máximo mensual (€)',
+        min_value=0,
+        max_digits=8,
+        decimal_places=2,
+        required=False,
+    )

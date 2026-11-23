@@ -1,0 +1,27 @@
+<div id="resultados-ofertas">
+    {% if filtros.errors %}
+        <p>Revisa los filtros antes de continuar.</p>
+        {{ filtros.errors }}
+    {% else %}
+        <ul>
+            {% for oferta in ofertas %}
+                <li>
+                    {% if oferta.imagen %}
+                        <img class="imagen-oferta" src="{{ oferta.imagen.url }}" alt="{{ oferta.titulo }}">
+                    {% endif %}
+                    <h3>
+                        <a href="{% url 'detalle_oferta' oferta.id %}">{{ oferta.titulo }}</a>
+                    </h3>
+                    <p>{{ oferta.descripcion }}</p>
+                    <p>
+                        Ciudad:
+                        <a href="{% url 'detalle_ciudad' oferta.ciudad.id %}">{{ oferta.ciudad.nombre }}</a>
+                    </p>
+                    <p class="precio">{{ oferta.precio_mensual }} €/mes</p>
+                </li>
+            {% empty %}
+                <li>No hay ofertas disponibles.</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>

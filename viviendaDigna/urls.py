@@ -6,7 +6,7 @@ from appViviendaDigna import views
 
 
 urlpatterns = [
-    path('', views.inicio, name='inicio'),
+    path('', views.InicioView.as_view(), name='inicio'),
     path('admin/', admin.site.urls),
     path('appViviendaDigna/', include('appViviendaDigna.urls')),
 ]

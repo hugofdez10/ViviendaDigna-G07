@@ -1,30 +1,27 @@
-{% extends "listado.html" %}
+{% extends "base.html" %}
+{% load static %}
 
 {% block titulo %}Ofertas - Vivienda Digna{% endblock %}
 
-{% block titulo_listado %}Listado de ofertas{% endblock %}
+{% block contenido %}
+    <h2>Listado de ofertas</h2>
+    <form id="filtro-ofertas" method="get" action="{% url 'listado_ofertas' %}"
+          data-resultados-url="{% url 'resultados_ofertas' %}"
+          data-cargando="Cargando ofertas…"
+          data-actualizado="Listado actualizado."
+          data-error="No se pudieron cargar las ofertas. Vuelve a intentarlo.">
+        <div>{{ filtros.ciudad.label_tag }} {{ filtros.ciudad }}</div>
+        <div>{{ filtros.precio_maximo.label_tag }} {{ filtros.precio_maximo }}</div>
+        <button class="boton" type="submit">Filtrar</button>
+        <a href="{% url 'listado_ofertas' %}">Limpiar filtros</a>
+    </form>
+    <p id="estado-ofertas" role="status"></p>
+    {% include "ofertas_resultados.html" %}
+{% endblock %}
 
-{% block elementos_listado %}
-    {% for oferta in ofertas %}
-        <li>
-            {% if oferta.imagen %}
-                <img class="imagen-oferta" src="{{ oferta.imagen.url }}" alt="{{ oferta.titulo }}">
-            {% endif %}
-            <h3>
-                <a href="{% url 'detalle_oferta' oferta.id %}">
-                    {{ oferta.titulo }}
-                </a>
-            </h3>
-            <p>{{ oferta.descripcion }}</p>
-            <p>
-                Ciudad:
-                <a href="{% url 'detalle_ciudad' oferta.ciudad.id %}">
-                    {{ oferta.ciudad.nombre }}
-                </a>
-            </p>
-            <p class="precio">{{ oferta.precio_mensual }} €/mes</p>
-        </li>
-    {% empty %}
-        <li>No hay ofertas disponibles.</li>
-    {% endfor %}
+{% block javascript %}
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous" defer></script>
+    <script src="{% static 'appViviendaDigna/js/ofertas.js' %}" defer></script>
 {% endblock %}
