@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Agenda de contactos · IW-BI-07</title>
+    <link rel="stylesheet" href="agenda.css">
+    <script type="importmap">
+    {
+        "imports": {
+            "vue": "https://cdn.jsdelivr.net/npm/vue@3.5.22/dist/vue.esm-browser.prod.js",
+            "vuefire": "https://esm.sh/vuefire@3.2.3?bundle&external=vue,firebase",
+            "firebase/app": "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js",
+            "firebase/auth": "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js",
+            "firebase/firestore": "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js",
+            "firebase/database": "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js",
+            "firebase/storage": "https://www.gstatic.com/firebasejs/12.7.0/firebase-storage.js",
+            "firebase/app-check": "https://www.gstatic.com/firebasejs/12.7.0/firebase-app-check.js",
+            "firebase/functions": "https://www.gstatic.com/firebasejs/12.7.0/firebase-functions.js"
+        }
+    }
+    </script>
+</head>
+<body>
+    <main>
+        <h1>Agenda de contactos</h1>
+        <div id="agenda">
+            <p role="status">Cargando la agenda…</p>
+        </div>
+        <noscript><p>Activa JavaScript para utilizar la agenda.</p></noscript>
+    </main>
+
+    <script type="text/x-template" id="plantilla-agenda">
+        <section aria-labelledby="nuevo-contacto">
+            <h2 id="nuevo-contacto">Nuevo contacto</h2>
+            <form @submit.prevent="crearContacto">
+                <div>
+                    <label for="nombre">Nombre</label>
+                    <input id="nombre" v-model.trim="formulario.nombre" name="nombre"
+                           autocomplete="name" maxlength="100" required>
+                </div>
+                <div>
+                    <label for="email">Email</label>
+                    <input id="email" v-model.trim="formulario.email" name="email" type="email"
+                           autocomplete="email" maxlength="254" required>
+                </div>
+                <div>
+                    <label for="telefono">Teléfono</label>
+                    <input id="telefono" v-model.trim="formulario.telefono" name="telefono" type="tel"
+                           autocomplete="tel" maxlength="30" required>
+                </div>
+                <button type="submit" :disabled="!disponible || operacion">Añadir contacto</button>
+            </form>
+        </section>
+
+        <section aria-labelledby="contactos">
+            <h2 id="contactos">Contactos</h2>
+            <p v-if="aviso" role="status">{{ aviso }}</p>
+            <p v-if="error" role="alert">{{ error }}</p>
+            <p v-if="puedePrevisualizar"><a href="?demo=1">Abrir la vista previa local</a></p>
+            <p v-if="disponible && !contactos.length">Todavía no hay contactos.</p>
+            <ul v-if="contactos.length">
+                <li v-for="contacto in contactos" :key="contacto.id">
+                    <div class="datos-contacto">
+                        <strong>{{ contacto.nombre }}</strong>
+                        <span>{{ contacto.email }}</span>
+                        <span>{{ contacto.telefono }}</span>
+                    </div>
+                    <button type="button" class="borrar" :disabled="!disponible || operacion"
+                            :aria-label="'Borrar contacto de ' + contacto.nombre"
+                            @click="borrarContacto(contacto.id)">Borrar</button>
+                </li>
+            </ul>
+        </section>
+    </script>
+    <script type="module" src="agenda.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /agendas/{uid}/contactos/{contacto} {
+      function esTitular() {
+        return request.auth != null && request.auth.uid == uid;
+      }
+
+      function contactoValido() {
+        let datos = request.resource.data;
+        return datos.keys().hasAll(['nombre', 'email', 'telefono', 'creado'])
+          && datos.keys().hasOnly(['nombre', 'email', 'telefono', 'creado'])
+          && datos.nombre is string && datos.nombre.size() > 0 && datos.nombre.size() <= 100
+          && datos.email is string && datos.email.size() > 0 && datos.email.size() <= 254
+          && datos.telefono is string && datos.telefono.size() > 0 && datos.telefono.size() <= 30
+          && datos.creado == request.time;
+      }
+
+      allow get, list, delete: if esTitular();
+      allow create: if esTitular() && contactoValido();
+    }
+  }
+}

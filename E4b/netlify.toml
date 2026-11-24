@@ -1,0 +1,3 @@
+[build]
+  command = "node preparar-netlify.mjs"
+  publish = "publicacion"

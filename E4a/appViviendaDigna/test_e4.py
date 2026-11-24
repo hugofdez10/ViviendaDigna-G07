@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from io import StringIO
 
 from django.contrib.auth import get_user_model
@@ -8,13 +7,6 @@ from django.test import TestCase
 from django.urls import reverse
 
 from .models import Ciudad, Oferta, Preferencias, SolicitudInformacion
-=======
-from django.contrib.auth import get_user_model
-from django.test import TestCase
-from django.urls import reverse
-
-from .models import Ciudad, Oferta, SolicitudInformacion
->>>>>>> f6d596d751cc3999fc6e1f36f64fcdaff0b8351c
 
 
 class FuncionalidadesE4Tests(TestCase):
@@ -71,7 +63,6 @@ class FuncionalidadesE4Tests(TestCase):
         self.assertContains(ingles, 'Accommodation listings')
         self.assertContains(ingles, '/en/appViviendaDigna/ofertas/resultados/')
         self.assertContains(self.client.get('/'), 'lang="es"')
-<<<<<<< HEAD
 
     def test_los_roles_aplican_permisos_en_el_admin(self):
         call_command('configurar_roles', stdout=StringIO())
@@ -105,5 +96,3 @@ class DatosDemoE4Tests(TestCase):
         solicitud = SolicitudInformacion.objects.get(usuario=alumno)
         self.assertIn(solicitud.oferta.ciudad, preferencias.ciudades.all())
         self.assertTrue(solicitud.oferta.servicios.exists())
-=======
->>>>>>> f6d596d751cc3999fc6e1f36f64fcdaff0b8351c
