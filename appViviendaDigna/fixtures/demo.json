@@ -48,5 +48,38 @@
         1
       ]
     }
+  },
+  {
+    "model": "auth.user",
+    "pk": 9001,
+    "fields": {
+      "username": "alumno_demo",
+      "password": "!",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "date_joined": "2026-11-23T09:00:00Z"
+    }
+  },
+  {
+    "model": "appViviendaDigna.preferencias",
+    "pk": 9001,
+    "fields": {
+      "usuario": 9001,
+      "ciudades": [
+        1
+      ],
+      "precio_maximo": "500.00"
+    }
+  },
+  {
+    "model": "appViviendaDigna.solicitudinformacion",
+    "pk": 9001,
+    "fields": {
+      "usuario": 9001,
+      "oferta": 1,
+      "mensaje": "Consulta de ejemplo para la entrega.",
+      "fecha": "2026-11-23T09:00:00Z"
+    }
   }
 ]

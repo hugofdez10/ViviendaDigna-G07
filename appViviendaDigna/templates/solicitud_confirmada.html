@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titulo %}{% translate "Solicitud guardada" %} - Vivienda Digna{% endblock %}
+
+{% block contenido %}
+    <h2>{% translate "Solicitud guardada" %}</h2>
+    <p><a href="{% url 'detalle_oferta' solicitud.oferta.pk %}">{{ solicitud.oferta.titulo }}</a></p>
+    <p>{{ solicitud.mensaje }}</p>
+{% endblock %}

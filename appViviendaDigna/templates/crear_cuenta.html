@@ -8,7 +8,7 @@
 
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form.as_div }}
 
         <button class="boton" type="submit">
             Crear cuenta

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titulo %}{% translate "Solicitar información" %} - Vivienda Digna{% endblock %}
+
+{% block contenido %}
+    <h2>{% translate "Solicitar información" %}</h2>
+    <p><a href="{% url 'detalle_oferta' oferta.pk %}">{{ oferta.titulo }}</a></p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_div }}
+        <button class="boton" type="submit">{% translate "Guardar solicitud" %}</button>
+    </form>
+{% endblock %}

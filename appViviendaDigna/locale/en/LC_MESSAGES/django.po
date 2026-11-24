@@ -1,0 +1,112 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Vivienda Digna E4\n"
+"Language: en\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Alojamiento para estudiantes"
+msgstr "Student accommodation"
+
+msgid "Inicio"
+msgstr "Home"
+
+msgid "Ofertas"
+msgstr "Listings"
+
+msgid "Ciudades"
+msgstr "Cities"
+
+msgid "Servicios"
+msgstr "Amenities"
+
+msgid "Mi perfil"
+msgstr "My profile"
+
+msgid "Cerrar sesión"
+msgstr "Sign out"
+
+msgid "Iniciar sesión"
+msgstr "Sign in"
+
+msgid "Crear cuenta"
+msgstr "Create an account"
+
+msgid "Proyecto de Ingeniería Web"
+msgstr "Web Engineering project"
+
+msgid "Encuentra tu próximo alojamiento"
+msgstr "Find your next home"
+
+msgid "Consulta alojamientos para estudiantes en diferentes ciudades y descubre los servicios que incluye cada oferta."
+msgstr "Browse student accommodation in different cities and see what each listing includes."
+
+msgid "Una oferta por ciudad de interés"
+msgstr "One listing per city of interest"
+
+msgid "Seleccionamos el alojamiento con el precio mensual más bajo de cada ciudad, respetando tu presupuesto máximo si lo has indicado."
+msgstr "We select the lowest monthly price in each city within your budget, if you have set one."
+
+msgid "Ver oferta"
+msgstr "View listing"
+
+msgid "No hay ofertas que coincidan con tus preferencias."
+msgstr "No listings match your preferences."
+
+msgid "Ver todas las ofertas"
+msgstr "View all listings"
+
+msgid "Listado de ofertas"
+msgstr "Accommodation listings"
+
+msgid "Ciudad"
+msgstr "City"
+
+msgid "Todas las ciudades"
+msgstr "All cities"
+
+msgid "Precio máximo mensual (€)"
+msgstr "Maximum monthly price (€)"
+
+msgid "Filtrar"
+msgstr "Filter"
+
+msgid "Limpiar filtros"
+msgstr "Clear filters"
+
+msgid "Cargando ofertas…"
+msgstr "Loading listings…"
+
+msgid "Listado actualizado."
+msgstr "Listings updated."
+
+msgid "No se pudieron cargar las ofertas. Vuelve a intentarlo."
+msgstr "Could not load the listings. Try again."
+
+msgid "Revisa los filtros antes de continuar."
+msgstr "Check the filters before continuing."
+
+msgid "No hay ofertas disponibles."
+msgstr "There are no listings available."
+
+msgid "Servicios incluidos"
+msgstr "Included amenities"
+
+msgid "Esta oferta no tiene servicios asociados."
+msgstr "No amenities are listed for this accommodation."
+
+msgid "Volver al listado de ofertas"
+msgstr "Back to listings"
+
+msgid "Solicitar información"
+msgstr "Request information"
+
+msgid "¿Qué te gustaría saber sobre esta oferta?"
+msgstr "What would you like to know about this listing?"
+
+msgid "Guardar solicitud"
+msgstr "Save request"
+
+msgid "Solicitud guardada"
+msgstr "Request saved"

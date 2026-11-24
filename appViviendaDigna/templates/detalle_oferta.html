@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block titulo %}{{ oferta.titulo }} - Vivienda Digna{% endblock %}
 
@@ -12,7 +13,7 @@
     <p>{{ oferta.descripcion }}</p>
     <p class="precio">{{ oferta.precio_mensual }} €/mes</p>
 
-    <h3>Ciudad</h3>
+    <h3>{% translate "Ciudad" %}</h3>
     <p>
         <a href="{% url 'detalle_ciudad' oferta.ciudad.id %}">
             {{ oferta.ciudad.nombre }}
@@ -20,7 +21,7 @@
     </p>
     <p>{{ oferta.ciudad.descripcion }}</p>
 
-    <h3>Servicios incluidos</h3>
+    <h3>{% translate "Servicios incluidos" %}</h3>
     <ul>
         {% for servicio in oferta.servicios.all %}
             <li>
@@ -30,11 +31,14 @@
                 : {{ servicio.descripcion }}
             </li>
         {% empty %}
-            <li>Esta oferta no tiene servicios asociados.</li>
+            <li>{% translate "Esta oferta no tiene servicios asociados." %}</li>
         {% endfor %}
     </ul>
 
     <p>
-        <a href="{% url 'listado_ofertas' %}">Volver al listado de ofertas</a>
+        <a class="boton" href="{% url 'solicitar_informacion' oferta.pk %}">{% translate "Solicitar información" %}</a>
+    </p>
+    <p>
+        <a href="{% url 'listado_ofertas' %}">{% translate "Volver al listado de ofertas" %}</a>
     </p>
 {% endblock %}

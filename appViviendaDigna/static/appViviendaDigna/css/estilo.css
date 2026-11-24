@@ -108,6 +108,10 @@ main li h3 {
     margin-top: 0;
 }
 
+main form > div {
+    margin: 16px 0;
+}
+
 
 .precio {
     color: #174c43;
@@ -242,4 +246,24 @@ footer p {
     .ofertas-inicio li {
         flex-basis: 100%;
     }
-}   
+}
+
+#filtro-ofertas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: 0.75rem;
+    margin-block-end: 1rem;
+}
+
+#filtro-ofertas label {
+    display: block;
+}
+
+#estado-ofertas:empty {
+    display: none;
+}
+
+.idioma {
+    margin-block-start: 0.75rem;
+}
